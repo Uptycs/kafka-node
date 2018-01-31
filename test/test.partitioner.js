@@ -9,9 +9,12 @@ var KeyedPartitioner = kafka.KeyedPartitioner;
 var CustomPartitioner = kafka.CustomPartitioner;
 
 function getPartitions (partitioner, partitions, count) {
+  const topicMetadata = [];
+  partitions.forEach(p => topicMetadata.push({ partition: p }));
+
   var arr = [];
   for (var i = 0; i < count; i++) {
-    arr.push(partitioner.getPartition(partitions));
+    arr.push(partitioner.getPartition(topicMetadata));
   }
   return arr;
 }
